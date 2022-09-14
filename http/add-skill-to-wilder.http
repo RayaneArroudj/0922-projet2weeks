@@ -1,0 +1,6 @@
+POST http://localhost:4000/wilders/3389678b-4e43-4092-bf80-af7b8b3e0ccf/skills
+Content-Type: application/json
+
+{
+  "skillId": "420a6927-f227-44bb-986e-c07fe60921a7"
+}

@@ -1,9 +1,23 @@
-const { getWilderRepository } = require('../../database/utils');
+const {
+  getWilderRepository,
+  getSkillRepository,
+} = require('../../database/utils');
+const { getSchoolByName } = require('../School/manager');
 
 async function initializeWilders() {
   const wilderRepository = await getWilderRepository();
   await wilderRepository.clear();
-  await wilderRepository.save({ firstName: 'Jean', lastName: 'Wilder' });
+  const lyonSchool = await getSchoolByName('Lyon');
+  await wilderRepository.save({
+    firstName: 'Jean',
+    lastName: 'Wilder',
+    school: lyonSchool,
+  });
+  await wilderRepository.save({
+    firstName: 'Jeanne',
+    lastName: 'Wilder',
+    school: lyonSchool,
+  });
 }
 
 async function getWilders() {
@@ -40,10 +54,26 @@ const deleteWilder = async (id) => {
   return wilderRepository.remove(existingWilder);
 };
 
+const addSkillToWilder = async (wilderId, skillId) => {
+  const wilderRepository = await getWilderRepository();
+  const skillRepository = await getSkillRepository();
+  const wilder = await wilderRepository.findOneBy({ id: wilderId });
+  if (!wilder) {
+    throw Error('No existing Wilder matching ID.');
+  }
+  const skill = await skillRepository.findOneBy({ id: skillId });
+  if (!skill) {
+    throw Error('No existing skill matching ID.');
+  }
+  wilder.skills = [...wilder.skills, skill];
+  return wilderRepository.save(wilder);
+};
+
 module.exports = {
   initializeWilders,
   getWilders,
   createWilder,
   updateWilder,
   deleteWilder,
+  addSkillToWilder,
 };
