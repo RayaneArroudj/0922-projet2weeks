@@ -1,7 +1,0 @@
-PUT http://localhost:4000/wilders/6eb5afb3-5a8e-47c9-a2e5-f18982be8881
-Content-Type: application/json
-
-{
-  "firstName": "rayane",
-  "lastName": "arroudj"
-}
