@@ -6,6 +6,7 @@ import {
   CardSecondaryTitle,
   CardTitle,
   CardParagraph,
+  CardSkillList,
 } from './Wilder.styled';
 
 const Wilder = ({ firstName, lastName, skills }) => {
@@ -20,13 +21,13 @@ const Wilder = ({ firstName, lastName, skills }) => {
         del flow alors que j'ai 0 flow.
       </CardParagraph>
       <CardSecondaryTitle>Wild Skills</CardSecondaryTitle>
-      <ul className="skills">
+      <CardSkillList>
         {skills.map((skill) => (
           <li key={skill.id}>
             <Skill skillName={skill.skillName} numberOfVotes={1} />
           </li>
         ))}
-      </ul>
+      </CardSkillList>
     </Card>
   );
 };

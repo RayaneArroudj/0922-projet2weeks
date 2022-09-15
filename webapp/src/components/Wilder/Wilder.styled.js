@@ -3,12 +3,8 @@ import styled, { css } from 'styled-components';
 import { MAIN_THEME_COLOR } from '../../styles/style-constants';
 import { baseTitleStyles, Paragraph } from '../../styles/base-styles';
 
-const cardPropertiesStyled = css`
-  color: #757575;
-  line-height: 1.5;
-`;
-
 export const Card = styled.article`
+  width: 200px;
   padding: 20px;
   border: 1px solid #c9c9c9;
   border-radius: 7px;
@@ -33,6 +29,29 @@ export const CardSecondaryTitle = styled.h4`
   font-size: 15px;
 `;
 
+const cardPropertiesStyled = css`
+  color: #757575;
+  line-height: 1.5;
+`;
+
 export const CardParagraph = styled(Paragraph)`
   ${cardPropertiesStyled}
+`;
+
+export const CardSkillList = styled.ul`
+  ${cardPropertiesStyled}
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  & li {
+    margin: 4px 0;
+    display: flex;
+    justify-content: space-around;
+    border: #f76c6c 1px solid;
+    border-radius: 4px;
+    padding: 2px;
+  }
 `;
