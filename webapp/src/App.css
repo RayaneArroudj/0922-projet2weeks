@@ -56,17 +56,9 @@ footer {
 }
 
 .card {
-  padding: 20px;
-  border: 1px solid #c9c9c9;
-  border-radius: 7px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .card > img:first-child {
-  border-radius: 7px 7px 0 0;
-  margin-bottom: 20px;
-  max-width: 100%;
-  height: auto;
 }
 
 .card h3,
@@ -119,17 +111,4 @@ footer {
 }
 
 .card .skills .votes {
-  /* Center the content */
-  align-items: center;
-  display: flex;
-  justify-content: center;
-
-  /* Colors */
-  background-color: rgba(0, 0, 0, 0.3);
-  color: #fff;
-
-  /* Rounded border */
-  border-radius: 9999px;
-  height: 20px;
-  width: 20px;
 }
