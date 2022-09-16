@@ -4,7 +4,7 @@ const Skill = ({ skillName, numberOfVotes }) => {
   return (
     <>
       {skillName}
-      <SkillVotes> {numberOfVotes}</SkillVotes>
+      <SkillVotes>{numberOfVotes}</SkillVotes>
     </>
   );
 };
