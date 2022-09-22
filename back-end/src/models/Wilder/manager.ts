@@ -1,28 +1,37 @@
-const {
-  getWilderRepository,
-  getSkillRepository,
-} = require('../../database/utils');
-const { getSchoolByName } = require('../School/manager');
-const { getSkillByName } = require('../Skill/manager');
+import { getWilderRepository, getSkillRepository } from '../../database/utils';
+import { getSchoolByName } from '../School/manager';
+import { getSkillByName } from '../Skill/manager';
 
-async function initializeWilders() {
+import Wilder from '.';
+import School from '../School';
+import Skill from '../Skill';
+
+async function initializeWilders(): Promise<void> {
   const wilderRepository = await getWilderRepository();
   await wilderRepository.clear();
-  const lyonSchool = await getSchoolByName('Lyon');
-  const javaScriptSkill = await getSkillByName('JavaScript');
-  const phpSkill = await getSkillByName('PHP');
-  await wilderRepository.save({
-    firstName: 'Jean',
-    lastName: 'Wilder',
-    school: lyonSchool,
-    skills: [javaScriptSkill],
-  });
-  await wilderRepository.save({
-    firstName: 'Jeanne',
-    lastName: 'Wilder',
-    school: lyonSchool,
-    skills: [phpSkill, javaScriptSkill],
-  });
+  const lyonSchool = (await getSchoolByName('Lyon')) as School;
+  const javaScriptSkill = (await getSkillByName('JavaScript')) as Skill;
+  const phpSkill = (await getSkillByName('PHP')) as Skill;
+
+  const jean = new Wilder('Jean', 'Wilder', lyonSchool, [javaScriptSkill]);
+  const jeanne = new Wilder('Jeanne', 'Wilder', lyonSchool, [
+    javaScriptSkill,
+    phpSkill,
+  ]);
+  await wilderRepository.save([jean, jeanne]);
+
+  // await wilderRepository.save({
+  //   firstName: 'Jean',
+  //   lastName: 'Wilder',
+  //   school: lyonSchool,
+  //   skills: [javaScriptSkill],
+  // });
+  // await wilderRepository.save({
+  //   firstName: 'Jeanne',
+  //   lastName: 'Wilder',
+  //   school: lyonSchool,
+  //   skills: [phpSkill, javaScriptSkill],
+  // });
 }
 
 async function getWilders() {
@@ -30,14 +39,14 @@ async function getWilders() {
   return wilderRepository.find();
 }
 
-async function createWilder(firstName, lastName) {
+async function createWilder(firstName: string, lastName: string) {
   const wilderRepository = await getWilderRepository();
   const newWilder = wilderRepository.create({ firstName, lastName });
   await wilderRepository.save(newWilder);
   return newWilder;
 }
 
-async function updateWilder(id, firstName, lastName) {
+async function updateWilder(id: string, firstName: string, lastName: string) {
   const wilderRepository = await getWilderRepository();
   const existingWilder = await wilderRepository.findOneBy({ id });
   if (!existingWilder) {
@@ -50,7 +59,7 @@ async function updateWilder(id, firstName, lastName) {
   });
 }
 
-const deleteWilder = async (id) => {
+const deleteWilder = async (id: string) => {
   const wilderRepository = await getWilderRepository();
   const existingWilder = await wilderRepository.findOneBy({ id });
   if (!existingWilder) {
@@ -59,7 +68,7 @@ const deleteWilder = async (id) => {
   return wilderRepository.remove(existingWilder);
 };
 
-const addSkillToWilder = async (wilderId, skillId) => {
+const addSkillToWilder = async (wilderId: string, skillId: string) => {
   const wilderRepository = await getWilderRepository();
   const skillRepository = await getSkillRepository();
   const wilder = await wilderRepository.findOneBy({ id: wilderId });
@@ -74,7 +83,7 @@ const addSkillToWilder = async (wilderId, skillId) => {
   return wilderRepository.save(wilder);
 };
 
-module.exports = {
+export {
   initializeWilders,
   getWilders,
   createWilder,
